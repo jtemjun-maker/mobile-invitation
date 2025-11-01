@@ -9,7 +9,7 @@
     <meta property="og:image" content="ex1.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Nanum+Myeongjo:wght@700&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -69,6 +69,16 @@
             margin-bottom: 30px;
         }
 
+        .calendar-title {
+            font-size: 2.4em; /* 기본 h2 크기(1.2em)의 200% */
+            margin-bottom: 15px; /* h2의 기본 여백(30px)을 줄여 달력과의 간격 조정 */
+        }
+
+        .calendar-section {
+            padding-top: 35px; /* 기본 섹션 상단 여백(50px)의 70%로 조정 */
+            padding-top: 10px; /* 기본 섹션 상단 여백(50px)을 80% 줄여 조정 */
+        }
+
         p {
             line-height: 1.8;
             font-size: 0.95em;
@@ -100,39 +110,46 @@
             width: calc(100% - 60px); /* 양쪽 여백을 고려한 너비 */
             background: rgba(0, 0, 0, 0.3);
             padding: 20px 30px;
-            border-radius: 10px;
         }
         .main-visual h1 {
-            font-family: var(--font-accent);
-            font-size: 2.5em;
+            font-family: 'MonteCarlo', cursive;
             margin: 0;
             font-weight: 400;
+            line-height: 1.0;
+            letter-spacing: 1px;
+        }
+        .main-visual .wedding-text {
+            font-size: 2.5em; /* 'Wedding' 글자 크기 */
+        }
+        .main-visual .announcement-text {
+            font-size: 1.8em; /* 'Announcement' 글자 크기 */
+            letter-spacing: 2px; /* 작은 글씨의 가독성을 위해 자간 조정 */
+            color: #c4c4c4; /* 'Announcement' 텍스트 색상을 살짝 진한 회색으로 변경 */
         }
         .main-visual .date-info {
+            font-family: 'Nanum Myeongjo', serif; /* 나눔명조로 변경 */
             margin-top: 20px;
             font-size: 1.1em;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .name-highlight {
+            font-family: 'Nanum Myeongjo', serif; /* 나눔명조로 변경 */
+            font-size: 1.1em; /* 기본 크기보다 10% 크게 */
+            font-weight: 700; /* 굵게 표시 */
         }
 
         .names { font-size: 1.4em; font-weight: 500; margin-bottom: 20px; }
         .info { margin-top: 8px; color: #555; line-height: 1.6; }
 
-        .contact-list { list-style: none; padding: 0; }
-        .contact-list li { margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .contact-list .call-btn {
-            padding: 8px 16px;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            font-size: 0.85em;
-            cursor: pointer;
-            background: none;
-            margin-left: 10px;
-            text-decoration: none;
-            color: var(--color-text);
-        }
-
         .calendar-container { display: flex; flex-direction: column; align-items: center; }
-        .calendar-header { font-size: 1.5em; font-weight: 500; margin-bottom: 10px; }
-        .d-day { background-color: var(--color-primary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; margin-top: 15px; }
+        .calendar-header {
+            font-size: 1.2em; /* 기존 1.5em의 80% 크기로 조정 */
+            font-weight: 700; /* 로드된 폰트 굵기에 맞춤 */
+            margin-bottom: 10px;
+        }
+        .d-day { background-color: var(--color-primary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; margin-top: 33px; /* 기존 15px에서 120% 증가 */ }
         
         .calendar-grid {
             display: grid;
@@ -193,38 +210,52 @@
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
         .btn {
             padding: 12px 20px;
+            display: inline-block; /* a 태그와 button 태그의 레이아웃을 일치시키기 위해 추가 */
             border: none;
             border-radius: 8px;
             font-weight: 500;
+            font-family: inherit; /* 버튼의 기본 폰트를 부모 요소의 폰트로 통일 */
+            font-size: 0.9em; /* 버튼 글자 크기 조정 */
             cursor: pointer;
             background-color: #f0f0f0;
+            text-align: center; /* 버튼 내 텍스트 가운데 정렬 */
             transition: background-color 0.3s;
+            color: #555; /* 버튼 텍스트 색상을 진회색으로 변경 */
+            text-decoration: none; /* a 태그의 기본 밑줄을 제거 */
+            box-sizing: border-box; /* 패딩과 테두리를 너비에 포함시켜 일관된 크기 유지 */
         }
         .btn-primary { background-color: var(--color-primary); color: var(--color-white); }
         .btn:hover { background-color: #ddd; }
         .btn-primary:hover { background-color: #7a6a58; }
 
         .account-list { list-style: none; padding: 0; text-align: left; }
-        .account-list li {
-            background-color: #f9f9f9;
+        .account-list > li {
+            margin-bottom: 30px; /* 신랑/신부 블록 간 간격 조정 (10px -> 20px) */
+        }
+        .account-list .person-info {
+            display: flex;
+            justify-content: flex-start; /* 이름 왼쪽 정렬 */
+            align-items: center;
+            margin-bottom: 6px; /* 이름과 버튼 사이 간격 60% 축소 (15px -> 6px) */
+            font-weight: 500;
+            font-size: 0.8em; /* 글자 크기 80%로 축소 */
+            color: var(--color-primary); /* 섹션 제목과 동일한 색상으로 변경 */
+        }
+        .account-list .button-group {
+            background-color: #f9f9f9; /* 연한 회색 배경 적용 */
             padding: 15px;
             border-radius: 8px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .account-list .copy-btn {
-            padding: 6px 12px;
-            font-size: 0.8em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
         .share-btns { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }
         .share-btn { padding: 10px 20px; border-radius: 8px; border: none; background: #eee; cursor: pointer; font-size: 0.9em; }
+
+        .person-name-highlight {
+            font-size: 1.2em; /* 부모 요소 대비 120% 크기 */
+        }
 
         .footer { background-color: #f7f7f7; padding: 40px 20px; }
         .footer p { font-size: 0.9em; color: #777; margin: 0; }
@@ -291,7 +322,11 @@
             text-align: center;
         }
         .invitation-section .info {
+            font-family: 'Nanum Myeongjo', serif; /* 나눔명조로 변경 */
             text-align: center;
+            font-size: 0.95em; /* 폰트 크기 조정 */
+            line-height: 1.8; /* 줄 간격 조정 */
+            color: var(--color-primary); /* '저희, 결혼합니다' 제목과 동일한 색상으로 변경 */
         }
         .invitation-body {
             display: flex;
@@ -303,6 +338,10 @@
         .invitation-body .content {
             flex-basis: 80%;
         }
+        .invitation-body .content p {
+            line-height: 1.44; /* 기존 1.8의 80%로 줄 간격 조정 */
+            color: #555; /* 진회색으로 변경 */
+        }
     </style>
 </head>
 <body>
@@ -313,7 +352,8 @@
             <img src="ex1.jpg" alt="결혼식 메인 이미지">
             <div class="overlay">
                 <div class="text-box">
-                    <h1>Seongjun<br> & Eunjin</h1>
+                    <!-- <h1>Seongjun<br> & Eunjin</h1> -->
+                    <h1><span class="wedding-text">Wedding</span><br><span class="announcement-text">Announcement</span></h1>
                     <div class="date-info" id="main-date-info">
                     </div>
                 </div>
@@ -344,13 +384,14 @@
                 <div class="right-space"></div>
             </div>
             <div class="info">
-                이성준 · 김은진 올림
+                <span class="name-highlight">이항원·이재임</span> 의 아들 <span class="name-highlight">성준</span><br>
+                <span class="name-highlight">김익규·신춘화</span> 의 딸&nbsp;&nbsp;&nbsp; <span class="name-highlight">은진</span>
             </div>
         </section>
 
         <!-- 3. 달력 -->
-        <section>
-            <h2>CALENDAR</h2>
+        <section class="calendar-section">
+            <h2 class="calendar-title">11월</h2>
             <div class="calendar-container">
                 <div class="calendar-header" id="calendar-header"></div>
                 <div class="calendar-grid" id="calendar-grid"></div>
@@ -361,19 +402,15 @@
         <!-- 6. 연락처 및 마음 전하기 -->
         <section>
             <h2>마음 전하실 곳</h2>
-            <ul class="contact-list" id="contact-list">
-                <!-- 연락처는 JS로 동적 생성 -->
-            </ul>
-            
             <ul class="account-list" id="account-list">
                 <!-- 계좌번호는 JS로 동적 생성 -->
             </ul>
-            <p style="margin-top: 40px; font-size: 1em;">축하해주시는 모든 분들께<br>진심으로 감사드립니다.</p>
+            <p style="margin-top: 40px; font-size: 1.1em; font-family: 'Nanum Myeongjo', serif;">축하해주시는 모든 분들께<br>진심으로 감사드립니다.</p>
         </section>
 
         <!-- 페이지 하단 푸터 -->
         <div class="footer">
-            <button id="event-page-btn" class="btn btn-primary">이벤트 페이지로 이동</button><br>
+            <!-- <button id="event-page-btn" class="btn btn-primary">이벤트 페이지로 이동</button><br> -->
             <!-- <a href="event.html" class="btn" style="margin-top: 10px; background-color: #aaa; color: white; text-decoration: none;">(수정용) event.html 바로가기</a> -->
         </div>
 
@@ -451,16 +488,17 @@
             let displayHours = hours % 12;
             displayHours = displayHours ? displayHours : 12; // 0시(자정)를 12시로 표시
 
-            const long = `${year}년 ${month}월 ${day}일<br>${dayOfWeekKO}요일 ${ampmKO} ${displayHours}시`;
+            const long = `${year}.${String(month).padStart(2, '0')}.${String(day).padStart(2, '0')} ${displayHours}:${minutes}${ampmEN}`;
             const short = `${year}. ${String(month).padStart(2, '0')}. ${String(day).padStart(2, '0')}. ${dayOfWeekEN} ${ampmEN} ${displayHours}:${minutes}`;
+            const mainVisualFormat = `${year}년 ${month}월 ${day}일 ${dayOfWeekKO}요일 ${ampmKO}${displayHours}시`;
             
-            return { long, short };
+            return { long, short, mainVisualFormat };
         }
 
         // --- DOMContentLoaded 이벤트 리스너 ---
         document.addEventListener('DOMContentLoaded', function() {
             const dateStrings = createDateStrings(config.weddingDate);
-            document.getElementById('main-date-info').textContent = dateStrings.short;
+            document.getElementById('main-date-info').textContent = dateStrings.mainVisualFormat;
 
             // 메인 텍스트 상자 위치 조정
             const textBox = document.querySelector('.main-visual .text-box');
@@ -469,7 +507,6 @@
 
             // --- 달력 생성 ---
             const calendarGrid = document.getElementById('calendar-grid');
-            document.getElementById('calendar-header').innerHTML = dateStrings.long;
             const weddingDate = config.weddingDate;
             const year = weddingDate.getFullYear();
             const month = weddingDate.getMonth();
@@ -505,27 +542,22 @@
                 calendarGrid.appendChild(dateCell);
             }
 
-            
-            // 연락처 목록 생성
-            const contactList = document.getElementById('contact-list');
-            contactList.innerHTML = `
-                <li>
-                    <span>신랑 ${config.groom.name}</span>
-                    <a href="tel:${config.groom.phone}" class="call-btn">전화걸기</a>
-                </li>
-                <li>
-                    <span>신부 ${config.bride.name}</span>
-                    <a href="tel:${config.bride.phone}" class="call-btn">전화걸기</a>
-                </li>`;
-
-            // 계좌번호 목록 생성
+            // 연락처 및 계좌번호 목록 생성
             const accountList = document.getElementById('account-list');
             accountList.innerHTML = `
-                 <li>
-                    <button class="btn account-view-btn" onclick="showAccountModal('groom')">신랑측 계좌번호 보기</button>
+                <li>
+                    <div class="person-info">신랑&nbsp; <span class="person-name-highlight">${config.groom.name}</span></div>
+                    <div class="button-group">
+                        <a href="tel:${config.groom.phone}" class="btn">전화걸기</a>
+                        <button class="btn" onclick="showAccountModal('groom')">계좌번호 보기</button>
+                    </div>
                 </li>
                 <li>
-                    <button class="btn account-view-btn" onclick="showAccountModal('bride')">신부측 계좌번호 보기</button>
+                    <div class="person-info">신부&nbsp; <span class="person-name-highlight">${config.bride.name}</span></div>
+                    <div class="button-group">
+                        <a href="tel:${config.bride.phone}" class="btn">전화걸기</a>
+                        <button class="btn" onclick="showAccountModal('bride')">계좌번호 보기</button>
+                    </div>
                 </li>
             `;
 
