@@ -3,44 +3,718 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>성준💛은진의 결혼식을 알립니다!</title>
+    <title>성준과 은진의 결혼식에 초대합니다</title>
+    <meta property="og:title" content="성준 & 은진 결혼합니다">
+    <meta property="og:description" content="2025년 11월 8일, 저희의 새로운 시작을 함께 축복해주세요.">
+    <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- 일반적인 메타데이터 -->
-    <meta name="description" content="2025년 11월 8일 토요일">
-
-    <!-- Open Graph (카카오톡, 페이스북 등) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="성준💛은진의 결혼식">
-    <meta property="og:description" content="2025년 11월 8일 토요일">
-    <!-- 중요: 이미지는 전체 URL 주소를 사용해야 합니다. -->
-    <meta property="og:image" content="https://github.com/jtemjun-maker/mobile-invitation/blob/main/src1.jpg?raw=true">
-    <meta property="og:url" content="https://jtemjun-maker.github.io/mobile-invitation/">
-
-    <!-- 트위터 카드 (선택 사항) -->
-    <meta name="twitter:card" content="summary_large_image">
     <style>
-        /* 이미지를 감싸는 컨테이너가 있다면 컨테이너에 맞출 수 있습니다. */
-        .image-container {
-            width: 80%; /* 예시: 화면 너비의 80%를 차지하는 컨테이너 */
-            margin: 0 auto; /* 가운데 정렬 */
-            border: 1px solid #ccc; /* 컨테이너 확인을 위한 테두리 */
+        :root {
+            --font-main: 'Noto Sans KR', sans-serif;
+            --font-accent: 'Playfair Display', serif;
+            --color-primary: #8d7b68;
+            --color-text: #333;
+            --color-background: #fdfaf6;
+            --color-white: #ffffff;
         }
 
-        .responsive-image {
-            max-width: 100%;
-            height: auto;
-            display: block; /* 이미지 아래에 생길 수 있는 불필요한 여백을 제거합니다. */
+        body {
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            text-align: center;
+            word-break: keep-all;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--color-white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        section {
+            padding: 50px 20px;
+            border-bottom: 1px solid #eee;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+            box-sizing: border-box;
+            min-height: 70vh; /* 콘텐츠가 적어도 화면의 일정 부분을 차지하도록 설정 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-family: var(--font-accent);
+            font-size: 1.2em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--color-primary);
+            margin-bottom: 30px;
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 0.95em;
+        }
+
+        .main-visual {
+            position: relative;
+            color: var(--color-white);
+            padding: 0;
+        }
+        .main-visual img {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+            display: block;
+        }
+        .main-visual .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .main-visual .text-box {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: calc(100% - 60px); /* 양쪽 여백을 고려한 너비 */
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 30px;
+            border-radius: 10px;
+        }
+        .main-visual h1 {
+            font-family: var(--font-accent);
+            font-size: 2.5em;
+            margin: 0;
+            font-weight: 400;
+        }
+        .main-visual .date-info {
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        .names { font-size: 1.4em; font-weight: 500; margin-bottom: 20px; }
+        .info { margin-top: 8px; color: #555; line-height: 1.6; }
+
+        .contact-list { list-style: none; padding: 0; }
+        .contact-list li { margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .contact-list .call-btn {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: pointer;
+            background: none;
+            margin-left: 10px;
+            text-decoration: none;
+            color: var(--color-text);
+        }
+
+        .calendar-container { display: flex; flex-direction: column; align-items: center; }
+        .calendar-header { font-size: 1.5em; font-weight: 500; margin-bottom: 10px; }
+        .d-day { background-color: var(--color-primary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; margin-top: 15px; }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            width: 100%;
+            max-width: 350px;
+            margin-top: 20px;
+        }
+        .calendar-grid div {
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .calendar-grid .day-name {
+            font-weight: 500;
+        }
+        .calendar-grid .day-name.sun { color: #d9534f; }
+        .calendar-grid .day-name.sat { color: #428bca; }
+        .calendar-grid .date-cell {
+            position: relative;
+        }
+        .calendar-grid .wedding-day {
+            background-color: rgba(141, 123, 104, 0.2);
+            border-radius: 50%;
+            font-weight: bold;
+            color: var(--color-primary);
+        }
+        .wedding-day .heart {
+            color: #e55039;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .gallery-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 250px;
+            background-color: #f0f0f0;
+            margin: 20px 0;
+            border-radius: 8px;
+            /* 실제 지도 API 사용 시 이 div에 지도를 렌더링합니다. */
+        }
+        .transport-info { text-align: left; margin-top: 20px; }
+        .transport-info strong { display: block; margin-bottom: 8px; color: var(--color-primary); }
+
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s;
+        }
+        .btn-primary { background-color: var(--color-primary); color: var(--color-white); }
+        .btn:hover { background-color: #ddd; }
+        .btn-primary:hover { background-color: #7a6a58; }
+
+        .account-list { list-style: none; padding: 0; text-align: left; }
+        .account-list li {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .account-list .copy-btn {
+            padding: 6px 12px;
+            font-size: 0.8em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .share-btns { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }
+        .share-btn { padding: 10px 20px; border-radius: 8px; border: none; background: #eee; cursor: pointer; font-size: 0.9em; }
+
+        .footer { background-color: #f7f7f7; padding: 40px 20px; }
+        .footer p { font-size: 0.9em; color: #777; margin: 0; }
+        .footer .btn {
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+    </style>
+    <style>
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none; /* 기본적으로 숨김 */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: var(--color-white);
+            padding: 30px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .modal-content h3 { margin-top: 0; color: var(--color-primary); }
+        .modal-content p { font-size: 1.1em; margin-bottom: 25px; }
+        .modal-buttons { display: flex; gap: 10px; }
+        .modal-buttons .btn { flex: 1; }
+
+        /* 계좌번호 보기 버튼 스타일 */
+        .account-view-btn {
+            width: 100%;
+        }
+
+        /* --- Quiz Modal Styles --- */
+        .quiz-form { display: flex; flex-direction: column; gap: 15px; text-align: left; }
+        .quiz-form label { font-size: 0.9em; color: #555; }
+        .quiz-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        /* 피드백 모달 스타일 */
+        .modal-content.correct #feedback-title { color: #28a745; } /* Green */
+        .modal-content.incorrect #feedback-title { color: #dc3545; } /* Red */
+
+    </style>
+    <style>
+        .invitation-section {
+            text-align: left;
+        }
+        .invitation-section h2 {
+            text-align: center;
+        }
+        .invitation-section .info {
+            text-align: center;
+        }
+        .invitation-body {
+            display: flex;
+        }
+        .invitation-body .left-space,
+        .invitation-body .right-space {
+            flex-basis: 10%;
+        }
+        .invitation-body .content {
+            flex-basis: 80%;
         }
     </style>
 </head>
 <body>
-<!-- 
-    <h1>화면 크기에 따라 변하는 이미지</h1>
-    <p>브라우저 창의 크기를 조절해보세요. 이미지 크기가 컨테이너에 맞춰 함께 변경됩니다.</p> -->
+    <div class="container">
+        <!-- 1. 메인 -->
+        <section class="main-visual">
+            <!-- TODO: 메인 이미지 교체 -->
+            <img src="ex1.jpg" alt="결혼식 메인 이미지">
+            <div class="overlay">
+                <div class="text-box">
+                    <h1>Seongjun<br> & Eunjin</h1>
+                    <div class="date-info" id="main-date-info">
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="image-container">
-        <img src="src1.jpg" alt="설명 문구" class="responsive-image">
+        <!-- 2. 인사말 -->
+        <section class="invitation-section">
+            <h2>저희, 결혼합니다.</h2>
+            <div class="invitation-body">
+                <div class="left-space"></div>
+                <div class="content">
+                    <p>
+                        청명한 가을날,<br>
+                        저희 두 사람이 새출발의 첫걸음을 내딛습니다.<br><br>
+        
+                        고마운 분들을 모시고 혼인의 예를 갖추어야 하나<br>
+                        양가 가족들의 축복 속에<br>
+                        작은 결혼식을 올리게 되었습니다.<br><br>
+        
+                        초대하지 못하는 점 깊은 양해를 구하며<br>
+                        저희의 첫걸음을 축복해 주시면 감사하겠습니다.<br><br>
+        
+                        서로 아껴주고 배려하며<br>
+                        같은 생각, 같은 마음으로 지혜롭게 살겠습니다.<br><br>
+                    </p>
+                </div>
+                <div class="right-space"></div>
+            </div>
+            <div class="info">
+                이성준 · 김은진 올림
+            </div>
+        </section>
+
+        <!-- 3. 달력 -->
+        <section>
+            <h2>CALENDAR</h2>
+            <div class="calendar-container">
+                <div class="calendar-header" id="calendar-header"></div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+                <div class="d-day" id="d-day"></div>
+            </div>
+        </section>
+
+        <!-- 6. 연락처 및 마음 전하기 -->
+        <section>
+            <h2>마음 전하실 곳</h2>
+            <ul class="contact-list" id="contact-list">
+                <!-- 연락처는 JS로 동적 생성 -->
+            </ul>
+            
+            <ul class="account-list" id="account-list">
+                <!-- 계좌번호는 JS로 동적 생성 -->
+            </ul>
+            <p style="margin-top: 40px; font-size: 1em;">축하해주시는 모든 분들께<br>진심으로 감사드립니다.</p>
+        </section>
+
+        <!-- 페이지 하단 푸터 -->
+        <div class="footer">
+            <button id="event-page-btn" class="btn btn-primary">이벤트 페이지로 이동</button><br>
+            <a href="event.html" class="btn" style="margin-top: 10px; background-color: #aaa; color: white; text-decoration: none;">(수정용) event.html 바로가기</a>
+        </div>
+
     </div>
 
+    <!-- 계좌번호 정보 모달 -->
+    <div id="account-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-title"></h3>
+            <p id="modal-account-info"></p>
+            <div class="modal-buttons">
+                <button id="modal-copy-btn" class="btn btn-primary">복사하기</button>
+                <button id="modal-close-btn" class="btn">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 퀴즈 모달 -->
+    <div id="quiz-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>깜짝 퀴즈!</h3>
+            <p style="font-size: 0.9em; color: #777; margin-top: -15px; margin-bottom: 20px;">신랑신부 가족 전용 페이지입니다.</p>
+            <p>아래 문제를 맞추시면<br>이벤트 페이지로 입장할 수 있습니다.</p>
+            <div class="quiz-form">
+                <label for="quiz1">문제 1. 신랑이 다니는 교회 이름은? (000000교회)</label>
+                <input type="text" id="quiz1" class="quiz-input" placeholder="정답을 입력하세요">
+                <label for="quiz2">문제 2. 신부가 다니는 교회 이름은? (00교회)</label>
+                <input type="text" id="quiz2" class="quiz-input" placeholder="정답을 입력하세요">
+            </div>
+            <div class="modal-buttons" style="margin-top: 25px;">
+                <button id="quiz-submit-btn" class="btn btn-primary">정답 확인</button>
+                <button id="quiz-close-btn" class="btn">뒤로가기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 피드백 모달 -->
+    <div id="feedback-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="feedback-title"></h3>
+            <p id="feedback-message" class="feedback-message"></p>
+            <div class="modal-buttons" style="margin-top: 25px;">
+                <button id="feedback-confirm-btn" class="btn btn-primary">확인</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 카카오 SDK (실제 사용 시 발급받은 키로 교체) -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        // --- 데이터 설정 ---
+        const config = {
+            groom: { name: "이성준", phone: "010-2406-6128", account: "토스뱅크 1000-0048-4015" },
+            bride: { name: "김은진", phone: "010-7531-8856", account: "토스뱅크 1000-0798-8378" },
+            weddingDate: new Date("2025-11-08T11:00:00"),
+            weddingLocation: "충북 청주시 상당구 문의면 청남대길 646 (신대리 산 26-1) 청남대 호수광장(골프장)",
+            mainTextVerticalOffset: 80 // 텍스트 상자 수직 위치 조정 (px 단위). 양수: 아래로, 음수: 위로
+        };
+
+        // --- 날짜 포맷 생성 함수 ---
+        function createDateStrings(date) {
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const dayOfWeekKO = ['일', '월', '화', '수', '목', '금', '토'][date.getDay()];
+            const dayOfWeekEN = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][date.getDay()];
+            
+            let hours = date.getHours();
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            
+            const ampmKO = hours >= 12 ? '오후' : '오전';
+            const ampmEN = hours >= 12 ? 'PM' : 'AM';
+
+            let displayHours = hours % 12;
+            displayHours = displayHours ? displayHours : 12; // 0시(자정)를 12시로 표시
+
+            const long = `${year}년 ${month}월 ${day}일<br>${dayOfWeekKO}요일 ${ampmKO} ${displayHours}시`;
+            const short = `${year}. ${String(month).padStart(2, '0')}. ${String(day).padStart(2, '0')}. ${dayOfWeekEN} ${ampmEN} ${displayHours}:${minutes}`;
+            
+            return { long, short };
+        }
+
+        // --- DOMContentLoaded 이벤트 리스너 ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateStrings = createDateStrings(config.weddingDate);
+            document.getElementById('main-date-info').textContent = dateStrings.short;
+
+            // 메인 텍스트 상자 위치 조정
+            const textBox = document.querySelector('.main-visual .text-box');
+            const offset = config.mainTextVerticalOffset || 0;
+            textBox.style.transform = `translate(-50%, calc(-50% + ${offset}px))`;
+
+            // --- 달력 생성 ---
+            const calendarGrid = document.getElementById('calendar-grid');
+            document.getElementById('calendar-header').innerHTML = dateStrings.long;
+            const weddingDate = config.weddingDate;
+            const year = weddingDate.getFullYear();
+            const month = weddingDate.getMonth();
+            const weddingDay = weddingDate.getDate();
+
+            // 요일 헤더 추가
+            const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+            daysOfWeek.forEach((day, index) => {
+                const dayNameCell = document.createElement('div');
+                dayNameCell.classList.add('day-name');
+                if (index === 0) dayNameCell.classList.add('sun');
+                if (index === 6) dayNameCell.classList.add('sat');
+                dayNameCell.textContent = day;
+                calendarGrid.appendChild(dayNameCell);
+            });
+
+            // 날짜 채우기
+            const firstDayOfMonth = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                calendarGrid.appendChild(document.createElement('div'));
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateCell = document.createElement('div');
+                dateCell.classList.add('date-cell');
+                dateCell.textContent = day;
+                if (day === weddingDay) {
+                    dateCell.classList.add('wedding-day');
+                    dateCell.innerHTML = `<span class="heart">♥</span>`;
+                }
+                calendarGrid.appendChild(dateCell);
+            }
+
+            // 이름 정보 업데이트
+            // document.getElementById('names').textContent = `${config.groom.name} & ${config.bride.name}`;
+
+            // 연락처 목록 생성
+            const contactList = document.getElementById('contact-list');
+            contactList.innerHTML = `
+                <li>
+                    <span>신랑 ${config.groom.name}</span>
+                    <a href="tel:${config.groom.phone}" class="call-btn">전화걸기</a>
+                </li>
+                <li>
+                    <span>신부 ${config.bride.name}</span>
+                    <a href="tel:${config.bride.phone}" class="call-btn">전화걸기</a>
+                </li>`;
+
+            // 계좌번호 목록 생성
+            const accountList = document.getElementById('account-list');
+            accountList.innerHTML = `
+                 <li>
+                    <button class="btn account-view-btn" onclick="showAccountModal('groom')">신랑측 계좌번호 보기</button>
+                </li>
+                <li>
+                    <button class="btn account-view-btn" onclick="showAccountModal('bride')">신부측 계좌번호 보기</button>
+                </li>
+            `;
+
+
+            // D-day 계산
+            const dDayElement = document.getElementById('d-day');
+            const weddingDateForDday = config.weddingDate;
+            const today = new Date();
+            const diff = weddingDateForDday.getTime() - today.getTime();
+            const dDay = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            if (dDay > 0) {
+                dDayElement.textContent = `결혼식까지 ${dDay}일 남았습니다.`;
+            } else if (dDay === 0) {
+                dDayElement.textContent = `결혼식이 오늘입니다!`;
+            } else {
+                dDayElement.textContent = `결혼식이 ${-dDay}일 지났습니다.`;
+            }
+
+            // 스크롤 애니메이션
+            const sections = document.querySelectorAll('section');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // 한 번 보이면 관찰 중지
+                    } 
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+
+            // 카카오 SDK 초기화 (실제 키로 교체 필요)
+            Kakao.init('YOUR_KAKAO_APP_KEY');
+
+            // 모달 닫기 이벤트 리스너
+            const modal = document.getElementById('account-modal');
+            document.getElementById('modal-close-btn').addEventListener('click', hideAccountModal);
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    hideAccountModal();
+                }
+            });
+
+            // 퀴즈 모달 이벤트 리스너
+            const quizModal = document.getElementById('quiz-modal');
+            document.getElementById('event-page-btn').addEventListener('click', showQuizModal);
+            document.getElementById('quiz-submit-btn').addEventListener('click', checkQuiz);
+            document.getElementById('quiz-close-btn').addEventListener('click', hideQuizModal);
+            quizModal.addEventListener('click', function(event) {
+                // 어두운 배경 클릭 시 닫기
+                if (event.target === quizModal) {
+                    hideQuizModal();
+                }
+            });
+
+            // 피드백 모달 이벤트 리스너
+            const feedbackModal = document.getElementById('feedback-modal');
+            feedbackModal.addEventListener('click', function(event) {
+                // 어두운 배경 클릭 시 닫기 (정답일 때는 닫히지 않도록)
+                const isIncorrect = feedbackModal.querySelector('.modal-content').classList.contains('incorrect');
+                if (event.target === feedbackModal && isIncorrect) {
+                    hideFeedbackModal();
+                }
+            });
+
+
+        });
+
+        // --- 유틸리티 함수 ---
+        const modal = document.getElementById('account-modal');
+
+        function showAccountModal(type) {
+            const modalTitle = document.getElementById('modal-title');
+            const modalAccountInfo = document.getElementById('modal-account-info');
+            const modalCopyBtn = document.getElementById('modal-copy-btn');
+
+            const person = config[type];
+            modalTitle.textContent = `${person.name} 측 계좌번호`;
+            modalAccountInfo.textContent = person.account;
+            
+            // 복사 버튼에 새로운 이벤트 리스너 설정 (기존 리스너 제거 후 추가)
+            // cloneNode를 사용하여 이벤트 리스너를 안전하게 교체합니다.
+            const newCopyBtn = modalCopyBtn.cloneNode(true);
+            modalCopyBtn.parentNode.replaceChild(newCopyBtn, modalCopyBtn);
+            newCopyBtn.addEventListener('click', () => copyToClipboard(person.account));
+
+            modal.style.display = 'flex';
+        }
+
+        function hideAccountModal() {
+            modal.style.display = 'none';
+        }
+
+        function showQuizModal() {
+            document.getElementById('quiz-modal').style.display = 'flex';
+        }
+
+        function hideQuizModal() {
+            document.getElementById('quiz-modal').style.display = 'none';
+        }
+
+        function checkQuiz() {
+            const answer1 = document.getElementById('quiz1').value.trim();
+            const answer2 = document.getElementById('quiz2').value.trim();
+
+            const correctAnswer1 = "나눔과섬김의교회";
+            const correctAnswer2 = "삼일교회";
+
+            const isCorrect = (answer1 === correctAnswer1 && answer2 === correctAnswer2);
+            
+            // 퀴즈 창을 먼저 닫습니다.
+            hideQuizModal();
+
+            // 잠시 후 피드백 모달을 띄웁니다.
+            setTimeout(() => {
+                showFeedbackModal(isCorrect);
+            }, 300); // 0.3초 딜레이
+        }
+
+        function showFeedbackModal(isCorrect) {
+            const feedbackModal = document.getElementById('feedback-modal');
+            const modalContent = feedbackModal.querySelector('.modal-content');
+            const title = document.getElementById('feedback-title');
+            const message = document.getElementById('feedback-message');
+            const confirmBtn = document.getElementById('feedback-confirm-btn');
+
+            modalContent.classList.toggle('correct', isCorrect);
+            modalContent.classList.toggle('incorrect', !isCorrect);
+
+            if (isCorrect) {
+                title.textContent = '정답입니다!';
+                message.textContent = '이벤트 페이지로 이동합니다.';
+                confirmBtn.onclick = () => { window.location.href = 'event.html'; };
+            } else {
+                title.textContent = '틀렸습니다';
+                message.textContent = '다시 시도해주세요.';
+                confirmBtn.onclick = hideFeedbackModal;
+            }
+            feedbackModal.style.display = 'flex';
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('계좌번호가 복사되었습니다.');
+                hideAccountModal();
+            }).catch(err => {
+                console.error('복사 실패:', err);
+                alert('복사에 실패했습니다.');
+            });
+        }
+
+        function hideFeedbackModal() {
+            document.getElementById('feedback-modal').style.display = 'none';
+        }
+
+        function copyUrl() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('청첩장 링크가 복사되었습니다.');
+            });
+        }
+
+        function shareKakao() {
+            if (!Kakao.isInitialized()) {
+                alert("카카오톡 공유 기능이 아직 준비되지 않았습니다. 실제 서비스 시 API 키를 설정해주세요.");
+                return;
+            }
+            Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: `${config.groom.name}과 ${config.bride.name}의 결혼식`,
+                    description: '저희의 새로운 시작을 함께 축복해주세요.',
+                    imageUrl: 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png', // TODO: 대표 이미지 URL로 교체
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href,
+                    },
+                },
+                buttons: [
+                    {
+                        title: '청첩장 보기',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                        },
+                    },
+                ],
+            });
+        }
+    </script>
 </body>
 </html>

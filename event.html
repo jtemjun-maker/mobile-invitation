@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 - 성준과 은진의 결혼식</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --font-main: 'Noto Sans KR', sans-serif;
+            --font-accent: 'Playfair Display', serif;
+            --color-primary: #8d7b68;
+            --color-text: #333;
+            --color-background: #fdfaf6;
+            --color-white: #ffffff;
+        }
+
+        body {
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            text-align: center;
+            word-break: keep-all;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: var(--color-white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        section {
+            padding: 50px 20px;
+            border-bottom: 1px solid #eee;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+            box-sizing: border-box;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-family: var(--font-accent);
+            font-size: 1.2em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--color-primary);
+            margin-bottom: 30px;
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 0.95em;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .gallery-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 250px;
+            background-color: #f0f0f0;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .transport-info { text-align: left; margin-top: 20px; }
+        .transport-info strong { display: block; margin-bottom: 8px; color: var(--color-primary); }
+
+        .path-description { margin-top: 30px; }
+        .path-step {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        .path-step img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s;
+        }
+        .btn-primary { background-color: var(--color-primary); color: var(--color-white); }
+        .btn:hover { background-color: #ddd; }
+        .btn-primary:hover { background-color: #7a6a58; }
+
+        .footer { background-color: #f7f7f7; padding: 40px 20px; text-align: center; }
+        .footer p { font-size: 0.9em; color: #777; margin: 0; }
+        .footer a { color: var(--color-primary); text-decoration: none; }
+
+        /* --- Lightbox Styles --- */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 0.3s, opacity 0.3s ease-in-out;
+        }
+        .lightbox-overlay.show {
+            visibility: visible;
+            opacity: 1;
+            transition-delay: 0s;
+        }
+        .lightbox-overlay img {
+            max-width: 95%;
+            max-height: 90%;
+            transform: scale(0.8);
+            transition: transform 0.3s ease-in-out;
+        }
+        .lightbox-overlay.show img {
+            transform: scale(1);
+        }
+    </style>
+
+    <!-- 카카오맵 SDK 로드 -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d92750dbe3c90a41b10662a6fdd18c10"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 1. 갤러리 -->
+        <section class="gallery-section">
+            <h2>GALLERY</h2>
+            <div class="gallery-grid">
+                <!-- TODO: 9개의 웨딩 사진으로 교체 -->
+                <img src="001.jpg">
+                <img src="002.jpg">
+                <img src="003.jpg">
+                <img src="004.jpg">
+                <img src="005.jpg">
+                <img src="006.jpg">
+            </div>
+        </section>
+
+        <!-- 2. 오시는길 -->
+        <section>
+            <h2>LOCATION</h2>
+            <div id="wedding-location"></div>
+            <!-- TODO: 카카오맵/네이버지도 API 연동 -->
+            <div id="map" class="map-container"></div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="window.open('https://map.kakao.com/link/search/청남대')">카카오맵</button>
+            </div>
+            <div class="transport-info">
+                <strong>자가용 안내</strong>
+                <p>예식장 내 주차장 무료 이용 가능 (2시간)</p>
+            </div>
+        </section>
+
+        <!-- 3. 오시는길 상세소개 -->
+        <section>
+            <h2>오시는 길 상세 안내</h2>
+            
+            <div style="text-align: left; width: 100%;">
+                <h3 style="color: var(--color-primary); border-bottom: 1px solid #eee; padding-bottom: 10px;">숙소 안내 (11월 7일)</h3>
+                <p>
+                    결혼식 전날, 하객분들이 편히 머무실 숙소입니다.<br>
+                    <strong>청주 메리제인 호텔</strong><br>
+                    <span style="font-size: 0.9em; color: #777;">충북 청주시 흥덕구 짐대로72번길 13</span>
+                </p>
+                <div id="hotel-map" class="map-container"></div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="window.open('https://map.kakao.com/link/search/청주메리제인호텔')">호텔 카카오맵</button>
+                </div>
+            </div>
+
+            <div class="path-description" style="text-align: left; width: 100%;">
+                <h3 style="color: var(--color-primary); border-bottom: 1px solid #eee; padding-bottom: 10px;">청남대 입구 → 예식 장소 (11월 8일)</h3>
+                <div class="path-step">
+                    <img src="path_photo_1.jpg" alt="청남대 매표소 사진">
+                    <p>1. 청남대 매표소를 통과하신 후, 이정표를 따라 '호수광장(골프장)' 방향으로 계속 직진합니다.</p>
+                </div>
+                <div class="path-step">
+                    <img src="path_photo_2.jpg" alt="호수광장 주차장 사진">
+                    <p>2. '호수광장(골프장)' 주차장에 주차하시면 안내요원이 예식 장소까지 안내해 드릴 예정입니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer">
+            <p><a href="index.html">메인으로 돌아가기</a></p>
+        </div>
+    </div>
+
+    <!-- 이미지 라이트박스 -->
+    <div id="lightbox" class="lightbox-overlay">
+        <img id="lightbox-image" src="">
+    </div>
+
+    <script>
+        // --- 데이터 설정 ---
+        const config = {
+            weddingLocation: "충북 청주시 상당구 문의면 청남대길 646 (신대리 산 26-1) 청남대 호수광장(골프장)",
+        };
+
+        // --- DOMContentLoaded 이벤트 리스너 ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // 오시는 길 정보 업데이트
+            const locationEl = document.getElementById('wedding-location');
+            if (locationEl) {
+                locationEl.textContent = config.weddingLocation;
+            }
+
+            // 스크롤 애니메이션
+            const sections = document.querySelectorAll('section');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // 한 번 보이면 관찰 중지
+                    } 
+                });
+            }, { threshold: 0.1 });
+
+            // 페이지가 로드되자마자 첫 번째 섹션이 보이도록 처리
+            if (sections.length > 0) {
+                sections[0].classList.add('visible');
+            }
+            
+            sections.forEach(section => observer.observe(section));
+
+            // --- 라이트박스 기능 ---
+            const galleryImages = document.querySelectorAll('.gallery-grid img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+
+            galleryImages.forEach(image => {
+                image.addEventListener('click', () => {
+                    const imgSrc = image.getAttribute('src');
+                    lightboxImage.setAttribute('src', imgSrc);
+                    lightbox.classList.add('show');
+                });
+            });
+
+            lightbox.addEventListener('click', () => {
+                lightbox.classList.remove('show');
+            });
+
+            // --- 카카오맵 API 초기화 및 지도 생성 ---
+            const mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+            
+            // 좌표를 변수로 관리하여 쉽게 수정할 수 있도록 합니다.
+            const weddingLocationLatLng = new kakao.maps.LatLng(36.4602, 127.4923); // 청남대 호수광장 좌표
+
+            const mapOption = { 
+                center: weddingLocationLatLng, // 지도의 중심좌표
+                level: 5 // 지도의 확대 레벨
+            };
+
+            // 지도를 생성합니다
+            const map = new kakao.maps.Map(mapContainer, mapOption); 
+
+            // 마커를 생성합니다
+            const marker = new kakao.maps.Marker({
+                position: weddingLocationLatLng
+            });
+
+            // 마커가 지도 위에 표시되도록 설정합니다
+            marker.setMap(map);
+
+            // --- 호텔 지도 생성 ---
+            const hotelMapContainer = document.getElementById('hotel-map');
+            const hotelLatLng = new kakao.maps.LatLng(36.6303, 127.4292); // 청주 메리제인 호텔 좌표
+            const hotelMap = new kakao.maps.Map(hotelMapContainer, { center: hotelLatLng, level: 3 });
+            const hotelMarker = new kakao.maps.Marker({ position: hotelLatLng });
+            hotelMarker.setMap(hotelMap);
+        });
+    </script>
+</body>
+</html>
