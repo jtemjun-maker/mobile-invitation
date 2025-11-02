@@ -150,6 +150,10 @@
             margin-bottom: 10px;
         }
         .d-day { background-color: var(--color-primary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; margin-top: 33px; /* 기존 15px에서 120% 증가 */ }
+        .d-day-number {
+            font-size: 1.2em; /* 부모 요소 대비 120% 크기 */
+            font-weight: 700; /* 굵게 표시 */
+        }
         
         .calendar-grid {
             display: grid;
@@ -405,7 +409,7 @@
             <ul class="account-list" id="account-list">
                 <!-- 계좌번호는 JS로 동적 생성 -->
             </ul>
-            <p style="margin-top: 40px; font-size: 1.1em; font-family: 'Nanum Myeongjo', serif;">축하해주시는 모든 분들께<br>진심으로 감사드립니다.</p>
+            <p style="margin-top: 32px; font-size: 1.1em; font-family: 'Nanum Myeongjo', serif;">축하해주시는 모든 분들께<br>진심으로 감사드립니다.</p>
         </section>
 
         <!-- 페이지 하단 푸터 -->
@@ -465,7 +469,7 @@
         // --- 데이터 설정 ---
         const config = {
             groom: { name: "이성준", phone: "010-2406-6128", account: "토스뱅크 1000-0048-4015" },
-            bride: { name: "김은진", phone: "010-7531-8856", account: "토스뱅크 1000-0798-8378" },
+            bride: { name: "김은진", phone: "010-7531-8856", account: "국민은행 606401-04-210275" },
             weddingDate: new Date("2025-11-08T11:00:00"),
             weddingLocation: "충북 청주시 상당구 문의면 청남대길 646 (신대리 산 26-1) 청남대 호수광장(골프장)",
             mainTextVerticalOffset: 80 // 텍스트 상자 수직 위치 조정 (px 단위). 양수: 아래로, 음수: 위로
@@ -548,14 +552,14 @@
                 <li>
                     <div class="person-info">신랑&nbsp; <span class="person-name-highlight">${config.groom.name}</span></div>
                     <div class="button-group">
-                        <a href="tel:${config.groom.phone}" class="btn">전화걸기</a>
+                        <a href="tel:${config.groom.phone}" class="btn">연락하기</a>
                         <button class="btn" onclick="showAccountModal('groom')">계좌번호 보기</button>
                     </div>
                 </li>
                 <li>
                     <div class="person-info">신부&nbsp; <span class="person-name-highlight">${config.bride.name}</span></div>
                     <div class="button-group">
-                        <a href="tel:${config.bride.phone}" class="btn">전화걸기</a>
+                        <a href="tel:${config.bride.phone}" class="btn">연락하기</a>
                         <button class="btn" onclick="showAccountModal('bride')">계좌번호 보기</button>
                     </div>
                 </li>
@@ -569,11 +573,11 @@
             const diff = weddingDateForDday.getTime() - today.getTime();
             const dDay = Math.ceil(diff / (1000 * 60 * 60 * 24));
             if (dDay > 0) {
-                dDayElement.textContent = `결혼식까지 ${dDay}일 남았습니다.`;
+                dDayElement.innerHTML = `결혼식까지 <span class="d-day-number">${dDay}</span>일 남았습니다.`;
             } else if (dDay === 0) {
                 dDayElement.textContent = `결혼식이 오늘입니다!`;
             } else {
-                dDayElement.textContent = `결혼식이 ${-dDay}일 지났습니다.`;
+                dDayElement.innerHTML = `결혼식이 <span class="d-day-number">${-dDay}</span>일 지났습니다.`;
             }
 
             // 스크롤 애니메이션
@@ -748,4 +752,6 @@
     </script>
 </body>
 </html>
-
+</body>
+</html>
+</html>
