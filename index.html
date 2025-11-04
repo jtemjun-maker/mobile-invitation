@@ -290,8 +290,8 @@
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .modal-content h3 { margin-top: 0; color: var(--color-primary); }
-        .modal-content p { font-size: 1.1em; margin-bottom: 25px; }
+        .modal-content h3 { margin-top: 0; color: var(--color-primary); font-weight: bold; }
+        .modal-content p { font-size: 1.1em; margin-bottom: 25px; font-weight: normal; }
         .modal-buttons { display: flex; gap: 10px; }
         .modal-buttons .btn { flex: 1; }
 
@@ -557,17 +557,17 @@
                 <div class="account-side">
                     <h3 style="text-align: center; font-family: 'Nanum Myeongjo', serif; color: var(--color-primary);  margin-bottom: 10px;">신랑측</h3>
                     <div class="button-group" style="grid-template-columns: 1fr; background-color: #f9f9f9; padding: 15px; border-radius: 8px;">
-                        <button class="btn" onclick="showAccountModal('parents.groom_father')">${config.parents.groom_father.name} 계좌번호 보기</button>
-                        <button class="btn" onclick="showAccountModal('parents.groom_mother')">${config.parents.groom_mother.name} 계좌번호 보기</button>
-                        <button class="btn" onclick="showAccountModal('groom')">${config.groom.name} 계좌번호 보기</button>
+                        <button class="btn" onclick="showAccountModal('parents.groom_father')">${config.parents.groom_father.name}&nbsp;&nbsp;<span style="font-weight: normal;">계좌번호</span></button>
+                        <button class="btn" onclick="showAccountModal('parents.groom_mother')">${config.parents.groom_mother.name}&nbsp;&nbsp;<span style="font-weight: normal;">계좌번호</span></button>
+                        <button class="btn" onclick="showAccountModal('groom')">${config.groom.name}&nbsp;&nbsp;<span style="font-weight: normal;">계좌번호</span></button>
                     </div>
                 </div>
                  <div class="account-side">
                     <h3 style="text-align: center; font-family: 'Nanum Myeongjo', serif; color: var(--color-primary);  margin-bottom: 10px;">신부측</h3>
                     <div class="button-group" style="grid-template-columns: 1fr; background-color: #f9f9f9; padding: 15px; border-radius: 8px;">
-                        <button class="btn" onclick="showAccountModal('parents.bride_father')">${config.parents.bride_father.name} 계좌번호 보기</button>
-                        <button class="btn" onclick="showAccountModal('parents.bride_mother')">${config.parents.bride_mother.name} 계좌번호 보기</button>
-                        <button class="btn" onclick="showAccountModal('bride')">${config.bride.name} 계좌번호 보기</button>
+                        <button class="btn" onclick="showAccountModal('parents.bride_father')">${config.parents.bride_father.name}&nbsp;&nbsp;<span style="font-weight: normal;">계좌번호</span></button>
+                        <button class="btn" onclick="showAccountModal('parents.bride_mother')">${config.parents.bride_mother.name}&nbsp;&nbsp;<span style="font-weight: normal;">계좌번호</span></button>
+                        <button class="btn" onclick="showAccountModal('bride')">${config.bride.name}&nbsp;&nbsp;<span style="font-weight: normal;">계좌번호</span></button>
                     </div>
                 </div>
             `;
@@ -647,12 +647,12 @@
             // type 문자열을 기반으로 config 객체에서 person 객체를 찾습니다.
             const person = type.split('.').reduce((o, i) => o[i], config);
 
-            let titleText = `${person.name} 계좌번호`;
+            let titleHTML = `${person.name} <span style="font-weight: normal;">계좌번호</span>`;
             if (type === 'groom' || type === 'bride') {
-                titleText = `${type === 'groom' ? '신랑' : '신부'} ${person.name} 계좌번호`;
+                titleHTML = `${type === 'groom' ? '신랑' : '신부'} ${person.name} <span style="font-weight: normal;">계좌번호</span>`;
             }
 
-            modalTitle.textContent = titleText;
+            modalTitle.innerHTML = titleHTML;
             modalAccountInfo.textContent = person.account;
 
             // 복사 버튼에 새로운 이벤트 리스너 설정 (기존 리스너 제거 후 추가)
